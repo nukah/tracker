@@ -1,13 +1,11 @@
-<% items.each do |item| %>
-	<tr>
-		<td><i class="icon icon-asterisk"></i></td>
-		<td><%= item.tid %></td>
-		<td><%= item.status %></td>
-		<td><%= item.updated.strftime('%-d/%-m/%Y') %></td>
-		<td><%= item.country %></td>
-		<td>
-			<a class="btn btn-danger delete" data-id="<%= item._id.to_s %>"><i class="icon-trash icon-white"></i></a>
-			<a class="btn btn-success update" data-id="<%= item._id.to_s %>"><i class="icon-refresh icon-white"></i></a>
-		</td>
-	</tr>
+<% if items.any? %>
+<div class="warehouse">
+	<% items.each do |f| %>
+		<div class="box">
+
+		<div>
+	<% end %>
+</div>
+<% else %>
+<h2>Записей не найдено</h2>
 <% end %>

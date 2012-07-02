@@ -11,6 +11,7 @@
 
   <meta name="viewport" content="width=device-width">
   <link rel="stylesheet" href="css/grid.css">
+  <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/bootstrap.min.css">
   <script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
   <script src="js/machinery.js"></script>
@@ -32,27 +33,9 @@
 				<button class="btn" id="add_new_tid" type="button">Добавить</button>
 			</div>
 		</form>
-		<a class="btn btn-success" id="update_all"><i class="icon-refresh icon-white"></i> Обновить всё</a>
 	</div>
-  	<div role="main" class="grid_8 prefix_2 suffix_2">
-		<div id="errors"></div>
-		<div id="listing" class="list">
-			<table class="table table-condensed">
-				<thead>
-					<tr>
-						<th></th>
-						<th>Код</th>
-						<th>Статус</th>
-						<th>Дата обновления</th>
-						<th>Страна</th>
-						<th></th>
-					</tr>
-				</thead>
-				<tbody>
-					<%= yield %>
-				</tbody>
-			</table>
-		</div>
+  	<div class="grid_8 prefix_2 suffix_2">
+		<%= yield %>
   	</div>
   </div>
 </body>

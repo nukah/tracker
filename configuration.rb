@@ -4,6 +4,7 @@ require 'models'
 require 'resque'
 require 'mongoid'
 require 'rack-session-mongo'
+require 'sinatra/partial'
 
 @c = YAML::load(File.open('config/configuration.yml'))
 
@@ -11,6 +12,7 @@ host,port = @c['datastore']['host'].split(':')
 Resque.mongo = Mongo::Connection.new(host,port).db(@c['datastore']['jobs'])
 
 configure do 
+  
   Mongoid.configure do |config|
     config.master = Mongo::Connection.new(host, port, :pool_size => 3).db(@c['datastore']['models'])
   end

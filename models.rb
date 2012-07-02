@@ -1,4 +1,13 @@
 require 'mongoid'
+class Status
+    include Mongoid::Document
+    
+    field :status, type: String
+    field :date, type: String
+    field :origin, type: String
+    
+    embedded_in :tracking
+end
 
 class Tracking
     include Mongoid::Document
@@ -6,7 +15,10 @@ class Tracking
     validates_uniqueness_of :tid
     validates_presence_of :tid
     field :tid, type: String
-    field :status, type: String
-    field :updated, type: DateTime, default: ->{ Time.now }
-    field :country, type: String
+    
+    embeds_many :statuses
+    
+    after_create do |t|
+      t.statuses.push(Status.new(status: 'New', date: Time.now))
+    end
 end

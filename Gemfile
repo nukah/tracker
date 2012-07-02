@@ -8,6 +8,7 @@ gem 'resque-mongo-scheduler', :git => 'git://github.com/nukah/resque-mongo-sched
 gem 'rack-session-mongo'
 gem 'mongoid'
 gem 'nokogiri'
+gem 'sinatra-partial'
 
 group :production do
     gem 'unicorn'
