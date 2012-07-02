@@ -1,0 +1,5 @@
+datastore:
+    host: localhost:27017
+    jobs: itrack-jobs
+    sessions: itrack-sessions
+    models: itrack-models
