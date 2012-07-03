@@ -3,4 +3,7 @@ datastore:
     jobs: itrack-jobs
     sessions: itrack-sessions
     models: itrack-models
+    username: itrack
+    password: 
+    dbs: ['itrack-jobs', 'itrack-sessions', 'itrack-models']
 subscriber_queue: requests

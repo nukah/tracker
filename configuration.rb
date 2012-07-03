@@ -12,21 +12,22 @@ require 'sinatra/partial'
 require 'slim'
 require 'tasks/tasks'
 
-@c = YAML::load(File.open('config/configuration.yml'))
+@c = HashWithIndifferentAccess.new(YAML::load(File.open('config/configuration.yml')))
 
-host,port = @c['datastore']['host'].split(':')
-Resque.mongo = Mongo::Connection.new(host,port).db(@c['datastore']['jobs'])
+host,port = @c.datastore.host.split(':')
+connection = Mongo::Connection.new(host, port).add_auth(@c.datastore.dbs, @c.datastore.username, @c.datastore.password).apply_saved_authentications()
+Resque.mongo = connection.db(@c.datastore.jobs)
 Resque.schedule = YAML.load_file('config/scheduler.yml')
 
 configure do 
   
   Mongoid.configure do |config|
-    config.master = Mongo::Connection.new(host, port, :pool_size => 3).db(@c['datastore']['models'])
+    config.master = connection.db(@c.datastore.models)
   end
   
   use Rack::Session::Mongo, {
     :host     => "#{host}:#{port}",
-    :db_name  => "#{@c['datastore']['sessions']}",
+    :db_name  => "#{@c.datastore.sessions}",
     :expire_after => 600
   }
   
