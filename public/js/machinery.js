@@ -10,13 +10,14 @@ $(document).ready(function() {
                     tid: $('#tracking_id').attr('value'),
                 },
             }).success(function(data) {
-                $('#listing tbody').fadeIn('slow').append(data);
+                $('.warehouse').fadeIn('slow').append(data);
+                $('h2').fadeOut('fast');
             });
         }
     });
     
-    $('.delete').click(function() {
-       obj = $(this).parents('tr');
+    $('.close').click(function() {
+       obj = $(this).parents('.box');
        $.ajax({
            url: "/",
            type: "DELETE",

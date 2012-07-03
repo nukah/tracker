@@ -1,0 +1,5 @@
+div class="warehouse"
+- if items.any?
+		== partial :item, collection: items
+- else
+	h2 Записей не найдено

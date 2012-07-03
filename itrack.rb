@@ -1,19 +1,20 @@
+# -*- encoding : utf-8 -*-
 require './configuration'
 
 class Track < Sinatra::Base
   register Sinatra::Partial
   
-  set :partial_template_engine, :erb  
+  set :partial_template_engine, :slim
   
   get '/' do
     @tracks = Tracking.all
-    erb :list, :layout => true, :locals => { :items => @tracks }
+    slim :list, :layout => true, :locals => { :items => @tracks }
   end
   
   post '/' do
     @track = Tracking.create(tid: params[:tid].to_s)
     if @track.save
-      erb :item, :layout => false, :locals => { :item => @track }
+      slim :item, :layout => false, :locals => { :item => @track }
     else
       status 400
       { :error => @track.errors.messages }.to_json
@@ -34,3 +35,4 @@ class Track < Sinatra::Base
     
   end
 end
+

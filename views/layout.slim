@@ -1,0 +1,28 @@
+doctype 1.1
+html
+	head
+		meta charset="utf-8"	
+  		meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"
+  		title Tracking
+		
+
+  		link rel="stylesheet" href="css/grid.min.css"
+  		link rel="stylesheet" href="css/bootstrap.min.css"
+  		link rel="stylesheet" href="css/style.min.css"
+  		script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"
+  		script src="js/machinery.min.js"
+  		script src="js/bootstrap.min.js"
+  		script src="js/bootstrap.alert.js"
+
+	body
+		div class="container_12"
+			div class="prefix_2 grid_3 suffix_7"
+				h1 Tracking info
+			div class="prefix_2 grid_4 suffix_6"
+				form class="well"
+					div class="input-append"
+						input type="text" class="input-medium" name="tid" id="tracking_id" placeholder="Номер заказа"
+						button class="btn" id="add_new_tid" type="button" ="Добавить"
+			div class="grid_12"
+				== yield
+					

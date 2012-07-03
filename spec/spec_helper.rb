@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 require 'bundler/setup'
 Bundler.require :default, :test 
 require 'sinatra'
@@ -15,3 +16,4 @@ Tracking.blueprint do
   updated { Time.now }
   country { 'Russia' }
 end
+

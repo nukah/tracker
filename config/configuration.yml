@@ -3,3 +3,4 @@ datastore:
     jobs: itrack-jobs
     sessions: itrack-sessions
     models: itrack-models
+subscriber_queue: requests
