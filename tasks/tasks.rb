@@ -4,14 +4,17 @@ require 'net/http'
 
 class Update
   @queue = :requests
-  def self.perform
-    Tracking.find(:all).each { |tracking| Resque.enqueue(UpdateEach, tracking.tid) }
+  def self.perform(ip = nil)
+    Request.create!(ip: ip) if ip
+    Tracking.find(:all).each { |tracking| Resque.enqueue_to(:requests, UpdateEach, tracking.tid) }
   end
 end
 
 class UpdateEach
+  @queue = :requests
   PROGRESS = {
     'Приём'   => 0.1,
+    'Экспорт' => 0.2,
     'Импорт'  => 0.3,
     'Обработка' => 0.5,
     'Вручение'  => 0.7
@@ -22,7 +25,7 @@ class UpdateEach
     document = Nokogiri::HTML(Net::HTTP.post_form(@url, 'BarCode' => tracking.tid, 'searchsign' => 1).body)
     rows = document.css('table.pagetext > tbody tr').collect { |row| row.css('td').collect { |cell| cell.inner_text } }
     rows.reject { |row| tracking.statuses.collect(&:status).include?(row[0]) }.each do |row|
-      status, date, code, origin = row[0], row[1], row[2], row[3]
+      status, date, code, origin = row[0].to_s, row[1].to_s, row[2].to_s, row[3].to_s
       tracking.progress = PROGRESS[status] if PROGRESS.has_key?(status)
       tracking.save
       tracking.statuses.push(Status.new(status: status, postcode: code, date: DateTime.parse(date).strftime("%-d/%-m/%Y"), origin: origin))

@@ -1,15 +1,15 @@
 source :rubygems
 
 gem 'sinatra'
+gem 'sinatra-partial'
+gem 'slim'
 gem 'mongo-resque', :require => 'resque'
+gem 'resque-mongo-scheduler', :git => 'git://github.com/nukah/resque-mongo-scheduler.git', :require => 'resque_scheduler'
+gem 'mongoid'
 gem 'bson',     '1.6.2'
 gem 'bson_ext', '1.6.2'
-gem 'resque-mongo-scheduler', :git => 'git://github.com/nukah/resque-mongo-scheduler.git', :require => 'resque_scheduler'
 gem 'rack-session-mongo'
-gem 'mongoid'
 gem 'nokogiri'
-gem 'slim'
-gem 'sinatra-partial'
 
 group :production do
     gem 'unicorn'
@@ -17,6 +17,7 @@ end
 
 group :development do
     gem 'pry'
+    gem 'thin'
 end
 
 group :test do

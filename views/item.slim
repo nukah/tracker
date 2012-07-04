@@ -1,20 +1,24 @@
-div.box
-	a.close data-id=item._id == "×"
-	span.label.label-info
+div.box data-id="#{item.tid}"
+	i.icon.icon-remove-sign.remove
+	i.icon.icon-refresh.refresh
+	span.label.label-info.caption
 		= item.tid
-	div class="progress progress-warning progress-striped"
-		div class="bar" style="width: #{item.progress * 100}%"
-	table.table.table-condensed
+	div.progress.progress-warning.progress-striped.active
+		- if item.progress
+			div.bar style="width: #{item.progress * 100}%"
+	table.table.table-condensed data-id=item._id
 		thead
 			th Статус
 			th Дата
 			th Страна
-			th Код
+			- if item.postcodes?
+				th Код
 		tbody
 			- item.statuses.each do |status|
 				tr
 					td
 						span.label.label-warning data-title=status.status == status.status.truncate(10)
 					td == status.date
-					td data-title=status.origin == status.origin.truncate(10) if status.origin
-					td == status.postcode
+					td data-title=status.origin == status.origin.truncate(20) if status.origin
+					- if status.postcode
+						td == status.postcode

@@ -6,23 +6,28 @@ html
   		title Tracking
 		
 
-  		link rel="stylesheet" href="css/grid.min.css"
+  		link rel="stylesheet" href="css/grid.css"
   		link rel="stylesheet" href="css/bootstrap.min.css"
-  		link rel="stylesheet" href="css/style.min.css"
-  		script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"
-  		script src="js/machinery.min.js"
+  		link rel="stylesheet" href="css/style.css"
+  		script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"
+  		script src="js/machinery.js"
   		script src="js/bootstrap.min.js"
   		script src="js/bootstrap.alert.js"
 
 	body
 		div class="container_12"
-			div class="prefix_2 grid_3 suffix_7"
+			div class="grid_5 suffix_7"
 				h1 Tracking info
-			div class="prefix_2 grid_4 suffix_6"
-				form class="well"
+			div class="grid_7 suffix_5"
 					div class="input-append"
 						input type="text" class="input-medium" name="tid" id="tracking_id" placeholder="Номер заказа"
 						button class="btn" id="add_new_tid" type="button" ="Добавить"
+						a.btn.btn-success id="update_all_tid" type="button" 
+							i.icon-repeat.icon-white
+							'  Обновить всё
 			div class="grid_12"
 				== yield
 					
+			p
+				a href="mailto:flow.energy@gmail.com" Mighty
+				|	 2012

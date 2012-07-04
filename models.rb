@@ -1,4 +1,5 @@
 # -*- encoding : utf-8 -*-
+require 'tasks/tasks'
 require 'mongoid'
 class Status
     include Mongoid::Document
@@ -6,7 +7,7 @@ class Status
     field :status, type: String
     field :date, type: String
     field :origin, type: String
-    field :postcode, type: String
+    field :postcode, type: String, default: ''
     
     embedded_in :tracking
 end
@@ -20,8 +21,24 @@ class Tracking
     field :progress, type: Float
     embeds_many :statuses
     
+    def postcodes?
+      self.statuses.map(&:postcode).reject(&:empty?).any?
+    end
+    
+    def postcodes
+      self.statuses.map(&:postcodes).reject(&:empty?)
+    end
+    
     after_create do |t|
       t.statuses.push(Status.new(status: 'New', date: Time.now.strftime("%-d/%-m/%Y")))
+      Resque.enqueue_to(:requests, UpdateEach, t.tid)
     end
 end
 
+class Request
+  include Mongoid::Document
+  include Mongoid::Timestamps::Created
+  
+  field :ip, type: String
+  field :request, type: String
+end

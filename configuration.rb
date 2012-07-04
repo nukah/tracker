@@ -19,9 +19,6 @@ conn = Mongo::Connection.new(host, port)
 models = conn.db('itrack-models') 
 jobs = conn.db('itrack-jobs')
 cache = conn.db('itrack-cache')
-models.authenticate('itrack', '2e70bc1c48')
-jobs.authenticate('itrack', '2e70bc1c48')
-cache.authenticate('itrack', '2e70bc1c48')
 Resque.mongo = jobs
 Resque.schedule = YAML.load_file('config/scheduler.yml')
 

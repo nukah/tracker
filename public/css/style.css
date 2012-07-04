@@ -1,4 +1,9 @@
-
+.caption {
+    font-size: 105%;
+}
+.progress {
+    margin-top: 5px;
+}
 .box {
     display: block;
     width: 350px;
@@ -27,4 +32,12 @@ p.status {
 }
 .progress {
     margin-bottom: 0px;
+}
+.refresh {
+    float: right;
+    cursor: pointer;
+}
+.remove {
+    float: right;
+    cursor: pointer;
 }

@@ -1,5 +1,6 @@
 # -*- encoding : utf-8 -*-
 require './configuration'
+require 'ipaddr'
 
 class Track < Sinatra::Base
   register Sinatra::Partial
@@ -7,7 +8,7 @@ class Track < Sinatra::Base
   set :partial_template_engine, :slim
   
   get '/' do
-    @tracks = Tracking.all
+    @tracks = Tracking.all.reverse
     slim :list, :layout => true, :locals => { :items => @tracks }
   end
   
@@ -21,8 +22,8 @@ class Track < Sinatra::Base
     end
   end
   
-  delete '/' do
-    @track = Tracking.where(_id: params[:id].to_s).first
+  post '/delete' do
+    @track = Tracking.where(tid: params[:id].to_s).first
     if @track.present?
       @track.destroy()
       status 200
@@ -31,8 +32,19 @@ class Track < Sinatra::Base
     end
   end
   
-  get '/update/:id' do
-    
+  post '/update' do
+    ip = IPAddr.new(request.ip).to_s
+    @track = Tracking.where(tid: params[:id].to_s).first
+    if @track.present?
+      slim :item, :layout => false, :locals => { :item => @track }
+    else
+      last = Request.where(ip: ip).last
+      if last and Time.now < (r.created_at + 10.minutes)
+        status 429
+      else
+        Resque.enqueue(Update, ip)
+      end
+    end
   end
 end
 
