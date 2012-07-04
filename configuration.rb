@@ -15,22 +15,27 @@ require 'tasks/tasks'
 @c = OpenStruct.new(YAML::load(File.open('config/configuration.yml')))
 
 host,port = @c.datastore['host'].split(':')
-connection = Mongo::Connection.new(host, port).add_auth(@c.datastore['dbs'], @c.datastore.['username'], @c.datastore.['password']).apply_saved_authentications()
-Resque.mongo = connection.db(@c.datastore.['jobs'])
+conn = Mongo::Connection.new(host, port)
+models = conn.db('itrack-models') 
+jobs = conn.db('itrack-jobs')
+cache = conn.db('itrack-cache')
+models.authenticate('itrack', '2e70bc1c48')
+jobs.authenticate('itrack', '2e70bc1c48')
+cache.authenticate('itrack', '2e70bc1c48')
+Resque.mongo = jobs
 Resque.schedule = YAML.load_file('config/scheduler.yml')
 
 configure do 
   
   Mongoid.configure do |config|
-    config.master = connection.db(@c.datastore.['models'])
+    config.master = models
   end
   
   use Rack::Session::Mongo, {
     :host     => "#{host}:#{port}",
-    :db_name  => "#{@c.datastore.['sessions']}",
+    :db_name  => "#{@c.datastore['sessions']}",
     :expire_after => 600
   }
-  
   settings.default_encoding = "utf-8"
   settings.views = "views/"
   enable :logging

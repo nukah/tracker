@@ -1,5 +1,5 @@
 updating_statuses:
-    cron: "*/30 * * * * *"
+    cron: "* */30 * * * *"
     class: Update
     queue: updates
     description: fetching new statuses for tracking
