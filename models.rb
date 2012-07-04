@@ -30,7 +30,7 @@ class Tracking
     end
     
     after_create do |t|
-      t.statuses.push(Status.new(status: 'New', date: Time.now.strftime("%-d/%-m/%Y")))
+      t.statuses.push(Status.new(status: 'Новая'))
       Resque.enqueue_to(:requests, UpdateEach, t.tid)
     end
 end
