@@ -1,22 +1,56 @@
+function success(message) {
+    return noty({
+        "text": message,
+        "theme":"noty_theme_twitter",
+        "layout":"topRight",
+        "type":"success",
+        "animateOpen":{"opacity":"toggle"},
+        "animateClose":{"height":"toggle"},
+        "speed":200,
+        "timeout":2000,
+        "closeButton":false,
+        "closeOnSelfClick":true,
+        "closeOnSelfOver":false,
+        "modal":false});
+}
+
+function fail(message) {
+    return noty({
+        "text": message,
+        "theme":"noty_theme_twitter",
+        "layout":"topRight",
+        "type":"error",
+        "animateOpen":{"opacity":"toggle"},
+        "animateClose":{"height":"toggle"},
+        "speed":200,
+        "timeout":2000,
+        "closeButton":false,
+        "closeOnSelfClick":true,
+        "closeOnSelfOver":false,
+        "modal":false});
+}
+
 $(document).ready(function() {
     $("#add_new_tid").live('click', function() {
-        if($('#tracking_id').attr('value') == '') {
-            alert('Нужен номер трекинга');
+        var tid = $('#tracking_id').attr('value');
+        if(tid == '') {
+            fail('Требуется правильный код трекинга');
         } else {
             $.ajax({
                 url: "/",
                 type: "POST",
                 data: {
                     tid: $('#tracking_id').attr('value'),
-                },
+                }
             }).success(function(d) {
                 $('.warehouse').prepend(d).show();
                 $('h2').fadeOut('fast');
+                success("Объект "+tid+" успешно добавлен.");
             });
         }
     });
     
-    $(".box .close").live('click', function() {
+    $(".box .remove").live('click', function() {
        var o = $(this).parents('.box');
        $.ajax({
            url: "/delete",
@@ -48,9 +82,9 @@ $(document).ready(function() {
             url: "/update",
             type: "POST",
         }).success(function() {
-            window.reload();
+            success("Обновление успешно выполнено");
         }).fail(function(e,b) {
-            alert('Error: ' + e.status);
+            fail("Ошибка при обновлении");
         });
     });
 });

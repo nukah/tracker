@@ -16,6 +16,7 @@ class UpdateEach
     'Приём'   => 0.1,
     'Экспорт' => 0.2,
     'Импорт'  => 0.3,
+    'Таможенное оформление завершено' => 0.4,
     'Обработка' => 0.5,
     'Вручение'  => 0.7
   }
@@ -28,7 +29,7 @@ class UpdateEach
       status, date, code, origin = row[0].to_s, row[1].to_s, row[2].to_s, row[3].to_s
       tracking.progress = PROGRESS[status] if PROGRESS.has_key?(status)
       tracking.save
-      tracking.statuses.push(Status.new(status: status, postcode: code, date: DateTime.parse(date).strftime("%-d/%-m/%Y"), origin: origin))
+      tracking.statuses.push(Status.new(status: status, postcode: code, date: DateTime.parse(date), origin: origin))
     end
   end
 end

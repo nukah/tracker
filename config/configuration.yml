@@ -1,7 +1,5 @@
-datastore:
-    host: localhost:27017
-    jobs: itrack-jobs
-    sessions: itrack-sessions
-    models: itrack-models
-    dbs: ['itrack-jobs', 'itrack-sessions', 'itrack-models']
+host: localhost
+port: 27017
+jobs: itrack-jobs
+models: itrack-models
 subscriber_queue: requests

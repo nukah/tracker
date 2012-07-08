@@ -1,3 +1,3 @@
 require './itrack'
 
-run Track.new
+run Tracker::Web
