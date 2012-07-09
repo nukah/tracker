@@ -18,7 +18,7 @@ div.box data-id="#{item.tid}"
 				tr
 					td
 						span.label.label-warning data-title=status.status == status.status.truncate(10)
-					td == DateTime.parse(status.date).strftime('%d/%m/%Y - %H:%M') if status.date
+					td == DateTime.parse(status.date).strftime('%d/%m/%Y') if status.date.present?
 					td data-title=status.origin == status.origin.truncate(20) if status.origin
 					- if status.postcode
 						td == status.postcode

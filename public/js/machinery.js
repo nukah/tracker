@@ -88,3 +88,15 @@ $(document).ready(function() {
         });
     });
 });
+
+$(function poll() { 
+    $.ajax({ 
+        url: "/i", 
+        dataType: "json", 
+        complete: poll, 
+        timeout: 30000,
+        success: function(data) {
+            console.log(data);
+        },
+    });
+});

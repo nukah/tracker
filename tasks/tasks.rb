@@ -2,6 +2,8 @@
 require 'nokogiri'
 require 'net/http'
 
+LOGGER = Logger.new(STDOUT)
+
 class Update
   @queue = :requests
   def self.perform(ip = nil)
@@ -23,6 +25,7 @@ class UpdateEach
   @url = URI("http://www.russianpost.ru/resp_engine.aspx?Path=rp/servise/en/home/postuslug/trackingpo")
   def self.perform(id)
     tracking = Tracking.where(:tid => id).first
+    LOGGER.info("New request for #{tracking.tid}")
     document = Nokogiri::HTML(Net::HTTP.post_form(@url, 'BarCode' => tracking.tid, 'searchsign' => 1).body)
     rows = document.css('table.pagetext > tbody tr').collect { |row| row.css('td').collect { |cell| cell.inner_text } }
     rows.reject { |row| tracking.statuses.collect(&:status).include?(row[0]) }.each do |row|
@@ -31,6 +34,7 @@ class UpdateEach
       tracking.save
       tracking.statuses.push(Status.new(status: status, postcode: code, date: DateTime.parse(date), origin: origin))
     end
+    LOGGER.info("Request completed succesfully.")
   end
 end
 

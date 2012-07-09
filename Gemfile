@@ -2,13 +2,13 @@ source :rubygems
 
 gem 'sinatra'
 gem 'sinatra-partial'
+gem 'async_sinatra'
 gem 'slim'
 gem 'mongo-resque', :require => 'resque'
-gem 'mongoid', ">= 2.4.11"
+gem 'mongoid', "2.4.11"
 gem 'bson',     '1.6.2'
 gem 'bson_ext', '1.6.2'
 gem 'nokogiri'
-gem 'cramp', :git => 'git://github.com/nukah/cramp.git'
 
 group :development do
     gem 'pry'
