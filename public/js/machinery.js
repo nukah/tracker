@@ -1,3 +1,12 @@
+String.prototype.format = function() {
+  var args = arguments;
+  return this.replace(/{(\d+)}/g, function(match, number) { 
+    return typeof args[number] != 'undefined'
+      ? args[number]
+      : match
+    ;
+  });
+};
 function success(message) {
     return noty({
         "text": message,
@@ -29,8 +38,22 @@ function fail(message) {
         "closeOnSelfOver":false,
         "modal":false});
 }
-
+function refresh(id) {
+    var post = $("[data-id="+id+"]");
+    $.ajax({
+        url: "/update",
+        type: "POST",
+        data: {
+            id: id,
+         },
+    }).success(function(obj) {
+        $(post).animate({ opacity: 'toggle' }, 300, function() { $(this).replaceWith(obj); success("Объект {0} был успешно обновлён.".format(id)) });
+        $(".updates").prepend("<p>{0} @ {1}</p>".format(id, (new Date().toLocaleString())))
+    });
+}
 $(document).ready(function() {
+    updateTrackings();
+    
     $("#add_new_tid").live('click', function() {
         var tid = $('#tracking_id').attr('value');
         if(tid == '') {
@@ -64,16 +87,7 @@ $(document).ready(function() {
     });
     
     $(".box .refresh").live('click', function() {
-       var o = $(this).parents('.box');
-       $.ajax({
-           url: "/update",
-           type: "POST",
-           data: {
-             id: o.data('id'),
-           },
-       }).success(function(d) {
-           o.fadeOut('fast', function() { $(d).hide(); o.replaceWith(d); o.fadeIn('slow');});
-       });
+        refresh($(this).parent().data('id'));
     });
     
     
@@ -88,15 +102,17 @@ $(document).ready(function() {
         });
     });
 });
-
-$(function poll() { 
-    $.ajax({ 
-        url: "/i", 
-        dataType: "json", 
-        complete: poll, 
-        timeout: 30000,
-        success: function(data) {
-            console.log(data);
-        },
+function updateTrackings() {
+    $.ajax({
+        type: 'GET',
+        url: '/poll',
+        dataType: 'json',
+        data: { time: Math.round(new Date().getTime()/1000) },
+        success: function(data, status) {
+            $.each(data, function(i,v) {
+                refresh(v);
+            });
+        }
     });
-});
+    setTimeout(updateTrackings, 10000);
+}

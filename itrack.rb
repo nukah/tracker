@@ -2,26 +2,29 @@
 require './configuration'
 require 'ipaddr'
 require 'sinatra/async'
+require 'json/ext'
 
 module Tracker
   class Web < Sinatra::Base
+    use Rack::Deflater
     register Sinatra::Partial
     register Sinatra::Async
     
     set :partial_template_engine, :slim
     
-    aget '/i' do
-      @tracks = Tracking.all
-      EM.add_timer(20) {
-      body {
-          Tracking.updated.to_json
-        }
+    aget '/poll' do
+      content_type :json
+      EM.add_timer(10) {
+        sync = Time.at(params[:time].to_i)
+        response = Refresh.where(:time.gt => (sync - 5.seconds)).map(&:tid).to_json
+        body { response }
       }
     end
     
     get '/' do
-      @tracks = Tracking.all.sort { |f,s| f.updated_at <=> s.updated_at }.reverse
-      slim :list, :layout => true, :locals => { :items => @tracks }
+      @tracks = Tracking.all.sort { |f,s| f.statuses.last.date <=> s.statuses.last.date }.reverse
+      @updates = Refresh.all.limit(5).order_by(:time, :desc)
+      slim :list, :layout => true, :locals => { :items => @tracks, :updates => @updates }
     end
   
     post '/' do

@@ -3,11 +3,15 @@
     include Mongoid::Document
         
     field :status, type: String
-    field :date, type: String, default: ''
-    field :origin, type: String, default: ''
-    field :postcode, type: String, default: ''
+    field :date, type: String, default: ""
+    field :origin, type: String, default: ""
+    field :postcode, type: String, default: ""
   
     embedded_in :tracking
+    
+    def to_str
+      "#{self.status} @ #{self.date} in #{self.origin}##{self.postcode}"
+    end
 end
 
 class Tracking
@@ -32,19 +36,8 @@ class Tracking
       statuses.map(&:postcodes).reject(&:empty?)
     end
     
-    def self.updated
-      self.all.reject { |t| t.updated_at < (Time.now - 20.seconds) }.map { |t| 
-        { 
-          key: t.tid,
-          progress: t.progress 
-          statuses: 
-        }
-        [t.tid, t.progress, t.statuses.map { |s| [s.status, (DateTime.parse(s.date).strftime('%d/%m/%Y') or nil), s.origin, s.postcode] }] 
-      }
-    end
-    
     before_save do |t|
-      t.updated_at = Time.now
+      t.updated_at = Time.now.getlocal
     end
     after_create do |t|
       t.statuses.push(Status.new(status: 'Новая'))
@@ -60,4 +53,12 @@ class Request
 
   field :ip, type: String
   field :request, type: String
+end
+
+class Refresh
+  include Mongoid::Document
+  
+  store_in :refreshes
+  field :time, type: DateTime, default: Time.now.getlocal
+  field :tid, type: String
 end

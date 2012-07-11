@@ -24,6 +24,7 @@ class UpdateEach
   }
   @url = URI("http://www.russianpost.ru/resp_engine.aspx?Path=rp/servise/en/home/postuslug/trackingpo")
   def self.perform(id)
+    updated = false
     tracking = Tracking.where(:tid => id).first
     LOGGER.info("New request for #{tracking.tid}")
     document = Nokogiri::HTML(Net::HTTP.post_form(@url, 'BarCode' => tracking.tid, 'searchsign' => 1).body)
@@ -31,9 +32,14 @@ class UpdateEach
     rows.reject { |row| tracking.statuses.collect(&:status).include?(row[0]) }.each do |row|
       status, date, code, origin = row[0].to_s, row[1].to_s, row[2].to_s, row[3].to_s
       tracking.progress = PROGRESS[status] if PROGRESS.has_key?(status)
+      status = Status.new(status: status, postcode: code, date: DateTime.parse(date).strftime("%d/%m/%Y"), origin: origin)
+      LOGGER.info("Substatus update: #{status.to_str}")
       tracking.save
-      tracking.statuses.push(Status.new(status: status, postcode: code, date: DateTime.parse(date), origin: origin))
+      tracking.statuses.push(status)
+      Refresh.create(tid: tracking.tid)
+      updated = true
     end
+    
     LOGGER.info("Request completed succesfully.")
   end
 end
