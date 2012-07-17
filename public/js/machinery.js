@@ -81,7 +81,7 @@ $(document).ready(function() {
         } else {
             $.ajax({
                 url: "/",
-                type: "POST",
+                type: "PUT",
                 data: {
                     tid: $('#tracking_id').attr('value'),
                 }
@@ -96,8 +96,8 @@ $(document).ready(function() {
     $(".box .remove").live('click', function() {
        var o = $(this).parents('.box');
        $.ajax({
-           url: "/delete",
-           type: "POST",
+           url: "/",
+           type: "DELETE",
            data: {
              id: o.data('id'),
            },
@@ -114,7 +114,7 @@ $(document).ready(function() {
     $("#update_all_tid").live('click', function() {
         $.ajax({
             url: "/update",
-            type: "POST",
+            type: "GET",
         }).success(function() {
             success("Обновление успешно выполнено");
         }).fail(function(e,b) {

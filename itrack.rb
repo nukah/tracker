@@ -34,7 +34,7 @@ module Tracker
       slim :list, :layout => true, :locals => { :items => @tracks, :updates => @updates }
     end
   
-    post '/' do
+    put '/' do
       @track = Tracking.create(tid: params[:tid].to_s)
       if @track.save
         slim :item, :layout => false, :locals => { :item => @track }
@@ -44,7 +44,7 @@ module Tracker
       end
     end
   
-    post '/delete' do
+    delete '/' do
       @track = Tracking.where(tid: params[:id].to_s).first
       if @track.present?
         @track.destroy()
