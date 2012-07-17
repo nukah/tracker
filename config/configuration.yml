@@ -1,5 +1,6 @@
 host: localhost
 port: 27017
-jobs: itrack-jobs
+rhost: localhost
+rport: 6379
 models: itrack-models
 subscriber_queue: requests

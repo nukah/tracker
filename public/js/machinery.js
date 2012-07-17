@@ -38,21 +38,41 @@ function fail(message) {
         "closeOnSelfOver":false,
         "modal":false});
 }
-function refresh(id) {
+function update(id) {
     var post = $("[data-id="+id+"]");
     $.ajax({
         url: "/update",
-        type: "POST",
+        type: "GET",
+        async: 'false',
+        data: {
+            id: id,
+         },
+    });
+}
+
+function refresh(id) {
+    var post = $("[data-id="+id+"]");
+    $.ajax({
+        url: "/refresh",
+        type: "GET",
         data: {
             id: id,
          },
     }).success(function(obj) {
-        $(post).animate({ opacity: 'toggle' }, 300, function() { $(this).replaceWith(obj); success("Объект {0} был успешно обновлён.".format(id)) });
-        $(".updates").prepend("<p>{0} @ {1}</p>".format(id, (new Date().toLocaleString())))
+        $(post).animate({ opacity: 'toggle' }, 800, function() { 
+            $(this).replaceWith(obj); success("Объект {0} был успешно обновлён.".format(id)) 
+        });
     });
 }
+
+
+var emitter = new EventSource('/poll');
+emitter.addEventListener('update', updateBlock, false);
+function updateBlock(e) {
+    refresh(e.data);
+}
+//emitter.addEventListener('update', updateBlock, false);
 $(document).ready(function() {
-    updateTrackings();
     
     $("#add_new_tid").live('click', function() {
         var tid = $('#tracking_id').attr('value');
@@ -87,7 +107,7 @@ $(document).ready(function() {
     });
     
     $(".box .refresh").live('click', function() {
-        refresh($(this).parent().data('id'));
+        update($(this).parent().data('id'));
     });
     
     
@@ -102,17 +122,3 @@ $(document).ready(function() {
         });
     });
 });
-function updateTrackings() {
-    $.ajax({
-        type: 'GET',
-        url: '/poll',
-        dataType: 'json',
-        data: { time: Math.round(new Date().getTime()/1000) },
-        success: function(data, status) {
-            $.each(data, function(i,v) {
-                refresh(v);
-            });
-        }
-    });
-    setTimeout(updateTrackings, 10000);
-}

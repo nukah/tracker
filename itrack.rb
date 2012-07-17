@@ -1,24 +1,31 @@
 # -*- encoding : utf-8 -*-
 require './configuration'
 require 'ipaddr'
-require 'sinatra/async'
+require "sinatra/streaming"
 require 'json/ext'
 
 module Tracker
   class Web < Sinatra::Base
-    use Rack::Deflater
+    connections = []
+    helpers Sinatra::Streaming
     register Sinatra::Partial
-    register Sinatra::Async
+    
+    def self.pack_event(event, data)
+      obj = ""
+      obj << "event: #{event.to_s}\n"
+      obj << "data: #{data.to_s}\n\n"
+      obj
+    end
     
     set :partial_template_engine, :slim
     
-    aget '/poll' do
-      content_type :json
-      EM.add_timer(10) {
-        sync = Time.at(params[:time].to_i)
-        response = Refresh.where(:time.gt => (sync - 5.seconds)).map(&:tid).to_json
-        body { response }
-      }
+    
+    get '/poll' do      
+      content_type 'text/event-stream'
+      stream :keep_open do |stream|
+        connections << stream
+        stream.callback { connections.delete(stream) }
+      end
     end
     
     get '/' do
@@ -47,19 +54,36 @@ module Tracker
       end
     end
   
-    post '/update' do
+    get '/update' do
       ip = IPAddr.new(request.ip).to_s
-      @track = Tracking.where(tid: params[:id].to_s).first
-      if @track.present?
-        slim :item, :layout => false, :locals => { :item => @track }
+      last = Request.where(ip: ip).last
+      if last and Time.now < (last.created_at + 2.minutes)
+        halt
+      end
+      if params[:id].present? && Tracking.where(tid: params[:id].to_s).first.present?
+        track = Tracking.where(tid: params[:id].to_s).first
+        Resque.enqueue(UpdateEach, track.tid)    
       else
-        last = Request.where(ip: ip).last
-        if last and Time.now < (last.created_at + 10.minutes)
-          status 429
-        else
-          Resque.enqueue(Update, ip)
+        Resque.enqueue(Update, ip)
+      end
+    end
+    
+    get '/refresh' do
+      @track = Tracking.where(tid: params[:id].to_s).first
+      slim :item, :layout => false, :locals => { :item => @track }
+    end
+    
+    Thread.new do
+      redis = Redis.new
+      redis.subscribe('update') do |on|
+        on.message do |channel, message|
+          connections.each do |stream|
+            object = pack_event(channel,message)
+            stream << object
+          end
         end
       end
     end
+    
   end
 end

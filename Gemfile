@@ -1,10 +1,12 @@
 source :rubygems
 
-gem 'sinatra'
+gem 'sinatra', :git => 'git://github.com/sinatra/sinatra.git'
 gem 'sinatra-partial'
-gem 'async_sinatra'
+gem 'sinatra-contrib', :git => 'git://github.com/sinatra/sinatra-contrib.git'
+gem 'redis'
+gem 'resque' #, :git => 'git://github.com/defunkt/resque.git'
 gem 'slim'
-gem 'mongo-resque', :require => 'resque'
+gem 'rake'
 gem 'mongoid', "2.4.11"
 gem 'bson',     '1.6.2'
 gem 'bson_ext', '1.6.2'
@@ -13,12 +15,6 @@ gem 'nokogiri'
 group :development do
     gem 'pry'
     gem 'thin'
+#    gem 'unicorn'
 end
 
-group :test do
-    gem 'rspec'
-    gem 'capybara'
-    gem 'machinist'
-    gem 'machinist_mongo', :git => 'git://github.com/nmerouze/machinist_mongo.git', :branch   => 'machinist2'
-    gem 'faker'
-end

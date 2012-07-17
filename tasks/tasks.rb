@@ -24,6 +24,7 @@ class UpdateEach
   }
   @url = URI("http://www.russianpost.ru/resp_engine.aspx?Path=rp/servise/en/home/postuslug/trackingpo")
   def self.perform(id)
+    redis = Settings.redis
     updated = false
     tracking = Tracking.where(:tid => id).first
     LOGGER.info("New request for #{tracking.tid}")
@@ -33,13 +34,12 @@ class UpdateEach
       status, date, code, origin = row[0].to_s, row[1].to_s, row[2].to_s, row[3].to_s
       tracking.progress = PROGRESS[status] if PROGRESS.has_key?(status)
       status = Status.new(status: status, postcode: code, date: DateTime.parse(date).strftime("%d/%m/%Y"), origin: origin)
-      LOGGER.info("Substatus update: #{status.to_str}")
+      LOGGER.info("#{Time.now.getlocal}: Substatus update: #{status.to_str}")
       tracking.save
       tracking.statuses.push(status)
-      Refresh.create(tid: tracking.tid)
       updated = true
     end
-    
+    redis.publish('update', id)
     LOGGER.info("Request completed succesfully.")
   end
 end
