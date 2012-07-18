@@ -49,7 +49,6 @@ function update(id) {
          },
     });
 }
-
 function refresh(id) {
     var post = $("[data-id="+id+"]");
     $.ajax({
@@ -60,20 +59,25 @@ function refresh(id) {
          },
     }).success(function(obj) {
         $(post).animate({ opacity: 'toggle' }, 800, function() { 
-            $(this).replaceWith(obj); success("Объект {0} был успешно обновлён.".format(id)) 
+            $(this).replaceWith(obj); success("Объект {0} был успешно обновлён.".format(id));
+            $('#spinner').hide();
         });
     });
 }
-
-
 var emitter = new EventSource('/poll');
 emitter.addEventListener('update', updateBlock, false);
 function updateBlock(e) {
     refresh(e.data);
 }
-//emitter.addEventListener('update', updateBlock, false);
 $(document).ready(function() {
-    
+    var cl = new CanvasLoader('spinner');
+    cl.setColor('#f5c400');
+    cl.setShape('spiral');
+    cl.setDiameter(80);
+    cl.setDensity(48);
+    cl.setRange(0.8);
+    cl.setSpeed(4); 
+    cl.setFPS(48);
     $("#add_new_tid").live('click', function() {
         var tid = $('#tracking_id').attr('value');
         if(tid == '') {
@@ -116,6 +120,7 @@ $(document).ready(function() {
             url: "/update",
             type: "GET",
         }).success(function() {
+            cl.show();
             success("Обновление успешно выполнено");
         }).fail(function(e,b) {
             fail("Ошибка при обновлении");

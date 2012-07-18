@@ -44,3 +44,11 @@ p.status {
     float: right;
     cursor: pointer;
 }
+#spinner {
+    position: absolute;
+    overflow: auto;
+    left: 80px;
+    top: 40px;
+    width: 80px;
+    height: 80px;
+}

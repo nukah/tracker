@@ -19,15 +19,6 @@ module Tracker
     
     set :partial_template_engine, :slim
     
-    
-    get '/poll' do      
-      content_type 'text/event-stream'
-      stream :keep_open do |stream|
-        connections << stream
-        stream.callback { connections.delete(stream) }
-      end
-    end
-    
     get '/' do
       @tracks = Tracking.all.sort { |f,s| f.statuses.last.date <=> s.statuses.last.date }.reverse
       @updates = Refresh.all.limit(5).order_by(:time, :desc)
@@ -58,13 +49,14 @@ module Tracker
       ip = IPAddr.new(request.ip).to_s
       last = Request.where(ip: ip).last
       if last and Time.now < (last.created_at + 2.minutes)
-        halt
-      end
-      if params[:id].present? && Tracking.where(tid: params[:id].to_s).first.present?
-        track = Tracking.where(tid: params[:id].to_s).first
-        Resque.enqueue(UpdateEach, track.tid)    
+        status 429
       else
-        Resque.enqueue(Update, ip)
+        if params[:id].present? && Tracking.where(tid: params[:id].to_s).first.present?
+          track = Tracking.where(tid: params[:id].to_s).first
+          Resque.enqueue(UpdateEach, track.tid)    
+        else
+          Resque.enqueue(Update, ip)
+        end
       end
     end
     
@@ -72,6 +64,14 @@ module Tracker
       @track = Tracking.where(tid: params[:id].to_s).first
       slim :item, :layout => false, :locals => { :item => @track }
     end
+    
+    get '/poll' do  
+      content_type 'text/event-stream'
+      stream :keep_open do |stream|
+        connections << stream
+        stream.callback { connections.delete(stream) }
+      end
+    end 
     
     Thread.new do
       redis = Redis.new
