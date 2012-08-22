@@ -53,9 +53,9 @@ module Tracker
       else
         if params[:id].present? && Tracking.where(tid: params[:id].to_s).first.present?
           track = Tracking.where(tid: params[:id].to_s).first
-          Resque.enqueue(UpdateEach, track.tid)    
+          UpdateEach.perform_async(track.tid)    
         else
-          Resque.enqueue(Update, ip)
+          Update.perform_async(ip)
         end
       end
     end

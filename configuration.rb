@@ -11,7 +11,7 @@ settings_array = OpenStruct.new(YAML.load(File.open('config/configuration.yml'))
 Kernel.const_set('Settings', settings_array) if !Kernel.const_defined?('Settings')
 
 mongo = Mongo::Connection.new(Settings.host, Settings.port)
-redis = Redis.new(:host => Settings.rhost, :port => Settings.rport)
+Settings.redis = Redis.new(:host => Settings.rhost, :port => Settings.rport)
 
 Sidekiq.configure_server do |config|
   config.redis = { :url => "redis://#{Settings.rhost}:#{Settings.rport}", :namespace => 'resque' }

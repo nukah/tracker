@@ -41,7 +41,7 @@ class Tracking
     end
     after_create do |t|
       t.statuses.push(Status.new(status: 'Новая'))
-      Resque.enqueue_to(:requests, UpdateEach, t.tid)
+      UpdateEach.perform_async(t.tid)
     end
 end
 

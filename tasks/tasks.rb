@@ -1,11 +1,14 @@
 # -*- encoding : utf-8 -*-
 require 'nokogiri'
 require 'net/http'
+require 'sidekiq'
 
 LOGGER = Logger.new(STDOUT)
 
 class Update
-  @queue = :requests
+  include Sidekiq::Worker
+  sidekiq_options :queue => :requests
+
   def self.perform(ip = nil)
     Request.create!(ip: ip) if ip
     Tracking.find(:all).each { |tracking| Resque.enqueue_to(:requests, UpdateEach, tracking.tid) }
@@ -13,7 +16,9 @@ class Update
 end
 
 class UpdateEach
-  @queue = :requests
+  include Sidekiq::Worker
+  sidekiq_options :queue => :requests
+  
   PROGRESS = {
     'Приём'   => 0.1,
     'Экспорт' => 0.3,
