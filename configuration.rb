@@ -12,12 +12,19 @@ Kernel.const_set('Settings', settings_array) if !Kernel.const_defined?('Settings
 
 mongo = Mongo::Connection.new(Settings.host, Settings.port)
 redis = Redis.new(:host => Settings.rhost, :port => Settings.rport)
-Settings.redis = redis
-configure do 
-  Resque.redis = redis
-  Mongoid.configure do |c|
+
+Sidekiq.configure_server do |config|
+  config.redis = { :url => "redis://#{Settings.rhost}:#{Settings.rport}", :namespace => 'resque' }
+end
+Sidekiq.configure_client do |config|
+  config.redis = { :url => "redis://#{Settings.rhost}:#{Settings.rport}", :namespace => 'resque' }
+end
+
+Mongoid.configure do |c|
     c.master = mongo.db(Settings.models)
-  end
+end
+
+configure do 	
   settings.default_encoding = "utf-8"
   settings.views = "views/"
   enable :logging

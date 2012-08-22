@@ -48,7 +48,7 @@ module Tracker
     get '/update' do
       ip = IPAddr.new(request.ip).to_s
       last = Request.where(ip: ip).last
-      if last and Time.now < (last.created_at + 2.minutes)
+      if !last and Time.now < (last.created_at + 2.minutes)
         status 429
       else
         if params[:id].present? && Tracking.where(tid: params[:id].to_s).first.present?

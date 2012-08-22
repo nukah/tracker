@@ -16,11 +16,11 @@ class UpdateEach
   @queue = :requests
   PROGRESS = {
     'Приём'   => 0.1,
-    'Экспорт' => 0.2,
-    'Импорт'  => 0.3,
-    'Таможенное оформление завершено' => 0.4,
-    'Обработка' => 0.5,
-    'Вручение'  => 0.7
+    'Экспорт' => 0.3,
+    'Импорт'  => 0.4,
+    'Таможенное оформление завершено' => 0.6,
+    'Обработка' => 0.7,
+    'Вручение'  => 1,
   }
   @url = URI("http://www.russianpost.ru/resp_engine.aspx?Path=rp/servise/en/home/postuslug/trackingpo")
   def self.perform(id)
