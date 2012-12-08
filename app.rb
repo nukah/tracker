@@ -31,6 +31,13 @@ class App < Sinatra::Base
     trackings = Tracking.all
     haml :index, locals: { trackings: trackings }
   end
+
+  put "/add" do
+    content_type :json
+    tid = params[:tid]
+    new_tracking = Tracking.new(tid: tid)
+    {'errors' => new_tracking.errors}.to_json if new_tracking.save()
+  end
 end
 
 DataMapper.finalize

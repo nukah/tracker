@@ -30,4 +30,4 @@ gem "haml"
 
 gem "eventmachine"
 gem "nokogiri"
-gem "curb"
+gem "em-synchrony"

@@ -1,40 +1,27 @@
 require 'nokogiri'
-require 'eventmachine'
-require 'curb'
+require 'em-http-request'
+require 'em-synchrony'
 require 'base64'
 
 class DataRetriever
   include EM::Deferrable
   def initialize tid
-    url = "http://www.russianpost.ru/rp/servise/ru/home/postuslug/trackingpo"
-    russian_post_request = Curl.get(url)
-    russian_post_request.callback {
-      body = Nokogiri::HTML(russian_post_request.response)
-      image_id, image_url = body.css("#CaptchaId").attr("value").value, body.css("#captchaImage").attr("src").value
-      image_request = EM::HttpRequest.new(image_url).get
-      image_request.callback {
-        captcha_image = Base64.strict_encode64(image_request.response)
-        puts "Image encoded processing to resolve"
-        #resolver = CaptchaResolver.new(id, captcha_image)
-
-        resolver.callback { |captcha|
-          puts "Captcha has been resolved, result is #{captcha}"
-          tracking_history = Faraday.post :url => url, :query => {'BarCode' => tracking_id, 'searchsign' => 1, 'CaptchaId' => id, 'InputedCaptchaCode' => captcha }
-
-          tracking_history.callback {
-            puts "Sorting out results"
-            page = Nokogiri::HTML(tracking_history.response)
-            history = {}
-            result_page.css(".pagetext").collect { |row| row.css('td').collect { |cell| cell.inner_text }}.each do |row|
-              status, date = row[0].to_s, row[1].to_s
-              history.store(status,date)
-            end
-            puts "Result is ready"
-            self.succeed(history)
-          }
-        }
-      }
-    }
+    url = "http://www.russianpost.ru/resp_engine.aspx?Path=rp/servise/ru/home/postuslug/trackingpo"
+    russian_post_request = EM::Synchrony.sync EM::HttpRequest.new(url).get
+    body = Nokogiri::HTML(russian_post_request.response)
+    image_id, image_url = body.css("#CaptchaId").attr("value").value, body.css("#captchaImage").attr("src").value
+    image_request = EM::Synchrony.sync EM::HttpRequest.new(image_url).get
+    image = Base64.strict_encode64(image_request.response)
+    resolver = EM::Synchrony.sync CaptchaResolver.new(image_id, image)
+    tracking_request = EM::Synchrony.sync EM::HttpRequest.new(url).post :body => {'BarCode' => tid, 'searchsign' => 1, 'CaptchaId' => image_id, 'InputedCaptchaCode' => resolver }
+    tracking_history = Nokogiri::HTML(tracking_request.response)
+    history = {}
+    tracking_history.css(".pagetext tbody > tr").collect { |list| list.css('td').collect { |row| row.inner_text }}.each do |element|
+      status, date = element[0].to_s, element[1].to_s
+      history.store(status,date)
+    end
+    self.succeed(history)
+    EM.stop
   end
 end
 
@@ -43,39 +30,20 @@ class CaptchaResolver
   def initialize captcha, image
     send_url = "http://antigate.com/in.php"
     resolve_url = "http://antigate.com/res.php"
-    puts "<CaptchaResolver> Preparing to send image of #{captcha} to Antigate"
-    captcha_send = Faraday.post :url => send_url, :query => { 'method' => 'base64', 
-                                                               'key' => '078a3767d89166e344255a7f949d7bb1', 
-                                                               'body' => @image,
-                                                               'numeric' => 1,
-                                                              }
-    captcha_send.callback {
-      puts "<CaptchaResolver> Got result, #{captcha_send.response}"
-      if captcha_send.response =~ /OK/
-        _, id = captcha_send.response.split('|')
-        puts "<CaptchaResolver> Got OK result, id of resolving captcha is #{id}. Processing to get status"
-        captcha_retrieve = Faraday.get :url => resolve_url, :query => { 'key' => '078a3767d89166e344255a7f949d7bb1',
-                                                         'action' => 'get',
-                                                         'id' => id
-                                                                          }
-        captcha_retrieve.callback {
-          puts "<CaptchaResolver> Got result for status. Response is #{captcha_retrieve.response}"
-          if captcha_retrieve.response =~ /OK/
-            _, result = captcha_retrieve.response.split('|')
-            self.succeed(result)
-          elsif captcha_retrieve.response =~ /CAPCHA_NOT_READY/
-            sleep 5
-            captcha_retrieve = Faraday.get :url => resolve_url, :query => { 'key' => '078a3767d89166e344255a7f949d7bb1',
-                                                             'action' => 'get',
-                                                             'id' => id
-                                                                              }
-          else
-            self.fail(captcha_retrieve.response)
-          end
-        }        
-      else 
-        self.fail(captcha_send.response)
-      end
-    }                                                              
+    send_captcha = EM::Synchrony.sync EM::HttpRequest.new(send_url).post :query => { 'method' => 'base64', 'key' => '078a3767d89166e344255a7f949d7bb1', 'body' => image, 'numeric' => 1 }
+
+    if send_captcha.response =~ /OK/
+      _, id = send_captcha.response.split('|')
+      captcha_poll = EM::Synchrony.add_periodic_timer(5) {
+        captcha_retrieve = EM::Synchrony.sync EM::HttpRequest.new(resolve_url).get :query => {key: '078a3767d89166e344255a7f949d7bb1', action: 'get', id: id }  
+        if captcha_retrieve.response =~ /OK/
+          _, result = captcha_retrieve.response.split('|')
+          captcha_poll.cancel
+          self.succeed(result)
+        end  
+      }
+    else 
+      self.fail(send_captcha.response)
+    end                                                           
   end
 end

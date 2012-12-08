@@ -10,5 +10,9 @@
     = javascripts_tag("application")
 
     %div.row-fluid.container
-      %div.span6.offset3 
+      %div.span3.offset4
+        %form{'method' => 'POST', 'action' => '/add', 'name' => 'add'}
+          %input{'type' => 'text', 'name' => 'tid'}
+          %submit.btn#add Add
+      %div.span6.offset3
         = yield 

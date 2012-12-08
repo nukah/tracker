@@ -9,7 +9,6 @@ GEM
       execjs
     coffee-script-source (1.4.0)
     cookiejar (0.3.0)
-    curb (0.8.3)
     daemons (1.1.9)
     data_mapper (1.2.0)
       dm-aggregates (~> 1.2.0)
@@ -130,9 +129,9 @@ PLATFORMS
 
 DEPENDENCIES
   coffee-script
-  curb
   data_mapper
   dm-postgres-adapter
+  em-synchrony
   eventmachine
   haml
   nokogiri
