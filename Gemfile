@@ -2,7 +2,8 @@ source :rubygems
 
 gem "sinatra"
 gem "sinatra-contrib"
-
+gem "sinatra-synchrony"
+gem "sinatra-partial"
 # Automated tasks
 gem "rake"
 
@@ -26,3 +27,7 @@ gem "sass"
 
 # Use HAML instead of ERB; its faster
 gem "haml"
+
+gem "eventmachine"
+gem "nokogiri"
+gem "curb"

@@ -1,0 +1,14 @@
+!!! 5
+%html
+  %head
+    %title App
+
+    = stylesheets_tag("application")
+
+  %body
+
+    = javascripts_tag("application")
+
+    %div.row-fluid.container
+      %div.span6.offset3 
+        = yield 
