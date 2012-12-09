@@ -4,6 +4,7 @@ config_file File.dirname(__FILE__) + "/config.yml"
 DataMapper::Logger.new(STDOUT, :debug)
 DataMapper.setup(:default, settings.development['database'])
 Dir[File.dirname(__FILE__) + '/models/*.rb'].each { |model| require model }
+Dir[File.dirname(__FILE__) + '/lib/**.rb'].each { |lib| require lib }
 
 require './helpers'
 
@@ -36,7 +37,14 @@ class App < Sinatra::Base
     content_type :json
     tid = params[:tid]
     new_tracking = Tracking.new(tid: tid)
-    {'errors' => new_tracking.errors}.to_json if new_tracking.save()
+    if new_tracking.save()
+      EM.synchrony do
+        response = EM::Synchrony.sync DataRetriever.new(tid)
+        response.to_json
+      end
+    else
+      {errors: new_tracking.errors.full_messages}.to_json
+    end
   end
 end
 
