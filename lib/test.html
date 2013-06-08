@@ -1,0 +1,282 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta http-equiv="Content-Style-Type" content="text/css">
+  <title></title>
+  <meta name="Generator" content="Cocoa HTML Writer">
+  <meta name="CocoaVersion" content="1187.34">
+  <style type="text/css">
+    p.p1 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Times; min-height: 14.0px}
+    p.p2 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Times}
+    p.p3 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Times; color: #0000ee}
+    span.s1 {text-decoration: underline ; color: #0000ee}
+    span.s2 {color: #000000}
+    span.s3 {text-decoration: underline}
+    td.td1 {margin: 0.5px 0.5px 0.5px 0.5px; padding: 1.0px 1.0px 1.0px 1.0px}
+    td.td2 {width: 774.0px; margin: 0.5px 0.5px 0.5px 0.5px; padding: 1.0px 1.0px 1.0px 1.0px}
+  </style>
+</head>
+<body>
+<table cellspacing="0" cellpadding="0">
+  <tbody>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p1"><br></p>
+      </td>
+      <td valign="middle" class="td2">
+        <p class="p2">&lt;!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"&gt;&lt;html&gt;&lt;head&gt;&lt;title&gt;Почта России. Отслеживание почтовых отправлений</p>
+      </td>
+    </tr>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p1"><br></p>
+      </td>
+      <td valign="middle" class="td2">
+        <p class="p2">&lt;/title&gt;&lt;meta name="Description" content="" /&gt;&lt;meta name="Keywords" content="" /&gt;&lt;link rel="shortcut icon" href="<a href="http://www.russianpost.ru/img/favicon.ico"><span class="s1">/img/favicon.ico</span></a>" /&gt;&lt;link href="<a href="http://www.russianpost.ru/styles/base-portal.css"><span class="s1">/styles/base-portal.css</span></a>" type="text/css" rel="stylesheet" /&gt;&lt;script language="JavaScript" src="<a href="http://www.russianpost.ru/scripts/common.js"><span class="s1">/scripts/common.js</span></a>" type="text/javascript"&gt;&lt;/script&gt;&lt;script language="JavaScript" src="<a href="http://www.russianpost.ru/scripts/validation.js"><span class="s1">/scripts/validation.js</span></a>" type="text/javascript"&gt;&lt;/script&gt;&lt;script language="JavaScript" src="<a href="http://www.russianpost.ru/scripts/service_scripts.js"><span class="s1">/scripts/service_scripts.js</span></a>" type="text/javascript"&gt;&lt;/script&gt;&lt;script language="JavaScript" src="<a href="http://www.russianpost.ru/scripts/jquery-1.4.2.min.js"><span class="s1">/scripts/jquery-1.4.2.min.js</span></a>" type="text/javascript"&gt;&lt;/script&gt;&lt;script language="javascript" type="text/javascript"&gt;</p>
+      </td>
+    </tr>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p1"><br></p>
+      </td>
+      <td valign="middle" class="td2">
+        <p class="p2">document.onkeydown = function checkKeycode(event)</p>
+      </td>
+    </tr>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p1"><br></p>
+      </td>
+      <td valign="middle" class="td2">
+        <p class="p2">{</p>
+      </td>
+    </tr>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p1"><br></p>
+      </td>
+      <td valign="middle" class="td2">
+        <p class="p2">var keycode;</p>
+      </td>
+    </tr>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p1"><br></p>
+      </td>
+      <td valign="middle" class="td2">
+        <p class="p2">if(!event) var event = window.event;</p>
+      </td>
+    </tr>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p1"><br></p>
+      </td>
+      <td valign="middle" class="td2">
+        <p class="p2">if (event.keyCode) keycode = event.keyCode; // IE</p>
+      </td>
+    </tr>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p1"><br></p>
+      </td>
+      <td valign="middle" class="td2">
+        <p class="p2">else if(event.which) keycode = event.which; // all browsers</p>
+      </td>
+    </tr>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p1"><br></p>
+      </td>
+      <td valign="middle" class="td2">
+        <p class="p2">if(keycode==13)</p>
+      </td>
+    </tr>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p1"><br></p>
+      </td>
+      <td valign="middle" class="td2">
+        <p class="p2">CheckInputCode();</p>
+      </td>
+    </tr>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p1"><br></p>
+      </td>
+      <td valign="middle" class="td2">
+        <p class="p2">}</p>
+      </td>
+    </tr>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p1"><br></p>
+      </td>
+      <td valign="middle" class="td2">
+        <p class="p2">&lt;/script&gt;&lt;/head&gt;&lt;body&gt;&lt;div&gt;&lt;script src="<a href="http://mc.yandex.ru/metrika/watch.js"><span class="s1">http://mc.yandex.ru/metrika/watch.js</span></a>" type="text/javascript"&gt;&lt;/script&gt;&lt;div style="display:none;"&gt;&lt;script type="text/javascript"&gt;</p>
+      </td>
+    </tr>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p1"><br></p>
+      </td>
+      <td valign="middle" class="td2">
+        <p class="p2">try { var yaCounter1704211 = new Ya.Metrika(1704211);</p>
+      </td>
+    </tr>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p1"><br></p>
+      </td>
+      <td valign="middle" class="td2">
+        <p class="p2">yaCounter1704211.clickmap(true);</p>
+      </td>
+    </tr>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p1"><br></p>
+      </td>
+      <td valign="middle" class="td2">
+        <p class="p2">yaCounter1704211.trackLinks(true);</p>
+      </td>
+    </tr>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p1"><br></p>
+      </td>
+      <td valign="middle" class="td2">
+        <p class="p2">} catch(e){}</p>
+      </td>
+    </tr>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p1"><br></p>
+      </td>
+      <td valign="middle" class="td2">
+        <p class="p2">&lt;/script&gt;&lt;/div&gt;&lt;noscript&gt;&lt;div style="position:absolute"&gt;&lt;img src="http://mc.yandex.ru/watch/1704211" alt="" /&gt;&lt;/div&gt;&lt;/noscript&gt;&lt;/div&gt;&lt;a name="top"&gt;&lt;/a&gt;&lt;form name="F1" method="POST" action="/resp_engine.aspx?Path=rp/servise/ru/home/postuslug/trackingpo"&gt;&lt;input type="hidden" name="OP" value=""&gt;&lt;/input&gt;&lt;input type="hidden" name="PATHCUR" value="rp/servise/ru/home/postuslug/trackingpo"&gt;&lt;/input&gt;&lt;input type="hidden" name="PATHFROM" value=""&gt;&lt;/input&gt;&lt;input type="hidden" name="WHEREONOK" value=""&gt;&lt;/input&gt;&lt;input type="hidden" name="ASP" value=""&gt;&lt;/input&gt;&lt;input type="hidden" name="PARENTID" value=""&gt;&lt;/input&gt;&lt;input type="hidden" name="FORUMID" value=""&gt;&lt;/input&gt;&lt;input type="hidden" name="NEWSID" value=""&gt;&lt;/input&gt;&lt;input type="hidden" name="DFROM" value=""&gt;&lt;/input&gt;&lt;input type="hidden" name="DTO" value=""&gt;&lt;/input&gt;&lt;input type="hidden" name="CA" value=""&gt;&lt;/input&gt;&lt;input type="hidden" name="CDAY" value="12"&gt;&lt;/input&gt;&lt;input type="hidden" name="CMONTH" value="12"&gt;&lt;/input&gt;&lt;input type="hidden" name="CYEAR" value="2012"&gt;&lt;/input&gt;&lt;input type="hidden" name="NAVCURPAGE" value=""&gt;&lt;/input&gt;&lt;input type="hidden" name="SEARCHTEXT" value=""&gt;&lt;/input&gt;&lt;div id="header_common" style="width: 994px;"&gt;&lt;table id="block_sub1" border="0" cellpadding="0" cellspacing="0"&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class="td_logo"&gt;&lt;a id="logo3" href="<a href="http://www.russianpost.ru/rp/index/ru/home"><span class="s1">/rp/index/ru/home</span></a>" title="Почта России"&gt;&lt;/a&gt;&lt;/td&gt;&lt;td class="td_main_menu"&gt;&lt;table style="width: 100%; margin: 0;padding: 0; border-collapse: collapse;"&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td style="padding: 0px 0px 10px 10px; width: 180px; vertical-align: bottom;"&gt;&lt;a href="<a href="http://www.russianpost.ru/rp/company/ru/home"><span class="s1">/rp/company/ru/home</span></a>"&gt;КОМПАНИЯ&lt;/a&gt;&lt;/td&gt;&lt;td style="padding: 0px 0px 10px 40px; width: 180px; vertical-align: bottom;"&gt;&lt;a href="<a href="http://www.russianpost.ru/rp/servise/ru/home"><span class="s1">/rp/servise/ru/home</span></a>"&gt;&lt;b&gt;УСЛУГИ И СЕРВИСЫ&lt;/b&gt;&lt;/a&gt;&lt;/td&gt;&lt;td style="padding: 0px 0px 10px 79px; height: 44px; vertical-align: bottom;"&gt;&lt;a href="<a href="http://www.russianpost.ru/rp/press/ru/home"><span class="s1">/rp/press/ru/home</span></a>" style="white-space: nowrap;"&gt;ПРЕСС-ЦЕНТР&lt;/a&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td style="padding: 10px 0px 0px 10px; vertical-align: top;"&gt;&lt;a href="<a href="http://www.russianpost.ru/rp/collective/ru/home"><span class="s1">/rp/collective/ru/home</span></a>"&gt;КОЛЛЕКТИВ&lt;/a&gt;&lt;/td&gt;&lt;td style="padding: 10px 0px 0px 40px; vertical-align: top;"&gt;&lt;a href="<a href="http://www.russianpost.ru/rp/filials/ru/home"><span class="s1">/rp/filials/ru/home</span></a>"&gt;ФИЛИАЛЫ И ОТДЕЛЕНИЯ&lt;/a&gt;&lt;/td&gt;&lt;td style="padding: 10px 0px 0px 79px; height: 40px; vertical-align: top;"&gt;&lt;a href="<a href="http://www.russianpost.ru/rp/contacts/ru/home"><span class="s1">/rp/contacts/ru/home</span></a>"&gt;КОНТАКТЫ&lt;/a&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/td&gt;&lt;td class="td_staff"&gt;&lt;div id="d_staff"&gt;&lt;div id="language_switch"&gt;&lt;strong&gt;RU&lt;/strong&gt;|</p>
+      </td>
+    </tr>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p1"><br></p>
+      </td>
+      <td valign="middle" class="td2">
+        <p class="p2">&lt;span class="unactive_language"&gt;&lt;a href="<a href="http://www.russianpost.ru/rp/servise/en/home/postuslug/trackingpo"><span class="s1">/rp/servise/en/home/postuslug/trackingpo</span></a>"&gt;EN&lt;/a&gt;&lt;/span&gt;&lt;/div&gt;&lt;p&gt;&lt;nobr&gt;Горячая линия&lt;/nobr&gt;&lt;br /&gt;</p>
+      </td>
+    </tr>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p1"><br></p>
+      </td>
+      <td valign="middle" class="td2">
+        <p class="p2">8-800-2005-888</p>
+      </td>
+    </tr>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p1"><br></p>
+      </td>
+      <td valign="middle" class="td2">
+        <p class="p2">&lt;/p&gt;&lt;div id="d_search"&gt;&lt;table style="border-collapse: collapse;"&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td&gt;&lt;input type="text" id="searchAdd" name="searchAdd" onkeydown="return sendSearch2OnEnter(event)" class="searchh" /&gt;&lt;input class="SERACHEDIT" type="hidden" name="PATHWEB" value="RP/INDEX/RU/Home" /&gt;&lt;/td&gt;&lt;td&gt;&lt;input class="SERACHEDIT" type="hidden" name="PATHPAGE" value="RP/INDEX/RU/Home/Search" /&gt;&lt;input class="SERACHEDIT" type="hidden" name="search1" /&gt;&lt;a href="<a href="javascript:sendSearch2()"><span class="s1">javascript:sendSearch2()</span></a>" class="submit"&gt;поиск&lt;/a&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/div&gt;&lt;table id="navigation_buttons"&gt;&lt;tr&gt;&lt;td&gt;&lt;a id="btn_home2" href="<a href="http://www.russianpost.ru/rp/index/ru/home"><span class="s1">/rp/index/ru/home</span></a>" title="На главную страницу"&gt;&lt;/a&gt;&lt;/td&gt;&lt;td&gt;&lt;a id="btn_sitemap2" href="<a href="http://www.russianpost.ru/rp/servise/ru/home/sitemap"><span class="s1">/rp/servise/ru/home/sitemap</span></a>" title="Карта сайта"&gt;&lt;/a&gt;&lt;/td&gt;&lt;td&gt;&lt;a id="btn_help2" href="<a href="http://www.russianpost.ru/resp_engine.aspx?Path=rp/servise/ru/home/postuslug/trackingpo#"><span class="s1">#</span></a>" title="Помощь"&gt;&lt;/a&gt;&lt;/td&gt;&lt;td&gt;&lt;a id="btn_hiddenzone" target="_blank" href="<a href="http://fcl.russianpost.ru/"><span class="s1">http://fcl.russianpost.ru</span></a>" title="Внутренний модуль"&gt;&lt;/a&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/div&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;div id="breadcrumbs"&gt;&lt;ul class="location"&gt;&lt;li&gt;&lt;a href="<a href="http://www.russianpost.ru/rp/servise/ru/home"><span class="s1">/rp/servise/ru/home</span></a>"&gt;&lt;img src="<a href="http://www.russianpost.ru/?action=getimage&amp;attachmentid=1199"><span class="s1">/?action=getimage&amp;amp;attachmentid=1199</span></a>" width="10" height="12" alt="На домашнюю страницу" title="На домашнюю страницу" border="0" class="noborder" /&gt;&lt;/a&gt;&lt;/li&gt;&lt;li&gt;&lt;a href="<a href="http://www.russianpost.ru/rp/servise/ru/home/postuslug"><span class="s1">/rp/servise/ru/home/postuslug</span></a>"&gt;Почтовые услуги&lt;/a&gt;&lt;/li&gt;&lt;li&gt;Отслеживание почтовых отправлений&lt;/li&gt;&lt;/ul&gt;&lt;/div&gt;&lt;p&gt;&lt;/p&gt;&lt;/div&gt;&lt;table id="block_base1" width="100%" border="0" cellspacing="0" cellpadding="0"&gt;&lt;tr valign="top"&gt;&lt;td id="block_left"&gt;&lt;table id="block_newrp" border="0" cellspacing="0" cellpadding="0" style="margin:0 0 10px 0;"&gt;&lt;tr&gt;&lt;td style="height:210px;"&gt;&lt;ul class="newrp kol"&gt;&lt;li&gt;&lt;a class="active" href="<a href="http://www.russianpost.ru/rp/servise/ru/home/postuslug"><span class="s1">/rp/servise/ru/home/postuslug</span></a>" name="m1"&gt;Почтовые услуги&lt;/a&gt;&lt;/li&gt;&lt;li&gt;&lt;a href="<a href="http://www.russianpost.ru/rp/servise/ru/home/finuslug"><span class="s1">/rp/servise/ru/home/finuslug</span></a>" name=""&gt;Финансовые услуги&lt;/a&gt;&lt;/li&gt;&lt;li&gt;&lt;a href="<a href="http://www.russianpost.ru/rp/servise/ru/home/uslforpeople"><span class="s1">/rp/servise/ru/home/uslforpeople</span></a>" name=""&gt;Услуги для населения&lt;/a&gt;&lt;/li&gt;&lt;li&gt;&lt;a href="<a href="http://www.russianpost.ru/rp/servise/ru/home/bisenes"><span class="s1">/rp/servise/ru/home/bisenes</span></a>" name=""&gt;Решения для бизнеса&lt;/a&gt;&lt;/li&gt;&lt;li&gt;&lt;a href="<a href="http://www.russianpost.ru/rp/servise/ru/home/documents"><span class="s1">/rp/servise/ru/home/documents</span></a>" name=""&gt;Нормативные документы&lt;/a&gt;&lt;/li&gt;&lt;/ul&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;div id="service_column"&gt;&lt;div class="title_ser width_b_s"&gt;Сервисы&lt;/div&gt;&lt;ol class="block_services" style="margin-bottom:3px;"&gt;&lt;li&gt;&lt;a href="<a href="http://www.russianpost.ru/rp/servise/ru/home/postuslug/searchops"><span class="s1">http://www.russianpost.ru/rp/servise/ru/home/postuslug/searchops</span></a>"&gt;</p>
+      </td>
+    </tr>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p1"><br></p>
+      </td>
+      <td valign="middle" class="td2">
+        <p class="p2">Поиск отделений почтовой связи</p>
+      </td>
+    </tr>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p1"><br></p>
+      </td>
+      <td valign="middle" class="td2">
+        <p class="p3"><span class="s2">&lt;/a&gt;&lt;/li&gt;&lt;li&gt;&lt;a href="<a href="http://www.russianpost.ru/rp/servise/ru/home/postuslug/trackingpo"><span class="s3">/rp/servise/ru/home/postuslug/trackingpo</span></a>"&gt;</span></p>
+      </td>
+    </tr>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p1"><br></p>
+      </td>
+      <td valign="middle" class="td2">
+        <p class="p2">Отслеживание почтовых отправлений</p>
+      </td>
+    </tr>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p1"><br></p>
+      </td>
+      <td valign="middle" class="td2">
+        <p class="p2">&lt;/a&gt;&lt;/li&gt;&lt;li&gt;&lt;a href="<a href="http://www.russianpost.ru/rp/servise/ru/home/postuslug/autotarif"><span class="s1">/rp/servise/ru/home/postuslug/autotarif</span></a>"&gt;Расчет стоимости почтовых отправлений</p>
+      </td>
+    </tr>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p1"><br></p>
+      </td>
+      <td valign="middle" class="td2">
+        <p class="p2">&lt;/a&gt;&lt;/li&gt;&lt;/ol&gt;&lt;ol class="block_services"&gt;&lt;li&gt;&lt;a href="<a href="http://www.russianpost.ru/rp/servise/ru/home/postuslug/rule_adress"><span class="s1">/rp/servise/ru/home/postuslug/rule_adress</span></a>"&gt;Как правильно написать реквизиты получателя</p>
+      </td>
+    </tr>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p1"><br></p>
+      </td>
+      <td valign="middle" class="td2">
+        <p class="p2">&lt;/a&gt;&lt;/li&gt;&lt;li&gt;&lt;a href="<a href="http://www.russianpost.ru/rp/servise/ru/home/faq"><span class="s1">/rp/servise/ru/home/faq</span></a>"&gt;Часто задаваемые вопросы</p>
+      </td>
+    </tr>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p1"><br></p>
+      </td>
+      <td valign="middle" class="td2">
+        <p class="p2">&lt;/a&gt;&lt;/li&gt;&lt;/ol&gt;&lt;p&gt;&lt;a href="<a href="http://www.russianpost.ru/rp/servise/ru/home/finuslug/creditcard"><span class="s1">/rp/servise/ru/home/finuslug/creditcard</span></a>"&gt;&lt;img src="<a href="http://www.russianpost.ru/?action=getimage&amp;attachmentid=3963"><span class="s1">/?action=getimage&amp;amp;attachmentid=3963</span></a>" border="0" style="margin-top: 0;" /&gt;&lt;/a&gt;&lt;/p&gt;&lt;div class="title_invest width_b_s" style="margin-bottom:10px;"&gt;&lt;a href="<a href="http://www.russianpost.ru/rp/company/ru/home/plans"><span class="s1">/rp/company/ru/home/plans</span></a>"&gt;</p>
+      </td>
+    </tr>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p1"><br></p>
+      </td>
+      <td valign="middle" class="td2">
+        <p class="p2">Инвесторам</p>
+      </td>
+    </tr>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p1"><br></p>
+      </td>
+      <td valign="middle" class="td2">
+        <p class="p2">&lt;/a&gt;&lt;/div&gt;&lt;p align="center"&gt;&lt;a href="<a href="http://www.russianpost.ru/rp/company/ru/home/tenders"><span class="s1">/rp/company/ru/home/tenders</span></a>" target="_blank"&gt;&lt;img src="<a href="http://www.russianpost.ru/img/tenders.gif"><span class="s1">/img/tenders.gif</span></a>" alt="Тендеры ФГУП «Почта России»" border="0" style="margin-top:0;" /&gt;&lt;/a&gt;&lt;/p&gt;&lt;table align="center" width="100%" border="0" cellpadding="0" cellspacing="0" class="short_orange_title long"&gt;&lt;tr&gt;&lt;td style="background: #f90;"&gt;&lt;p&gt;&lt;b&gt;&lt;a href="<a href="http://www.russianpost.ru/rp/company/ru/home/korporativ"><span class="s1">/rp/company/ru/home/korporativ</span></a>" style="color: #fff;"&gt;&lt;font color="#FFFFFF"&gt;Корпоративные&lt;br /&gt;издания&lt;/font&gt;&lt;/a&gt;&lt;/b&gt;&lt;/p&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;p align="center"&gt;&lt;a href="<a href="http://www.russianpost.ru/rp/company/ru/home/korporativ/magazin"><span class="s1">/rp/company/ru/home/korporativ/magazin</span></a>"&gt;&lt;img src="<a href="http://www.russianpost.ru/img/korporativ.jpg"><span class="s1">/img/korporativ.jpg</span></a>" border="0" alt="" title="" style="margin-bottom:0;" /&gt;&lt;/a&gt;&lt;/p&gt;&lt;div class="bg_color width_b_s" style="margin-bottom:21px;"&gt;&lt;a href="<a href="http://www.russianpost.ru/rp/company/ru/home/korporativ/reklama"><span class="s1">/rp/company/ru/home/korporativ/reklama</span></a>"&gt;Реклама в корпоративных</p>
+      </td>
+    </tr>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p1"><br></p>
+      </td>
+      <td valign="middle" class="td2">
+        <p class="p2">&lt;br /&gt;изданиях&lt;/a&gt;&lt;/div&gt;&lt;/div&gt;&lt;/td&gt;&lt;td id="block_ma2" width="100%" rowspan="2"&gt;&lt;div class="container7"&gt;&lt;div id="PRINTBODY"&gt;&lt;table width="100%" border="0" cellspacing="0" cellpadding="0"&gt;&lt;tr&gt;&lt;td bgcolor="#99CCFF" valign="top"&gt;&lt;h6 style="margin: 10px 0 0 20px;"&gt;Отслеживание почтовых отправлений&lt;/h6&gt;&lt;br /&gt;&lt;p /&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;p /&gt;&lt;div class="containermenu"&gt;&lt;dl class="menu"&gt;&lt;dt&gt;Выберите один из разделов:&lt;/dt&gt;&lt;dd&gt;&lt;a href="<a href="http://www.russianpost.ru/rp/servise/ru/home/postuslug/lettercorrespondence"><span class="s1">/rp/servise/ru/home/postuslug/lettercorrespondence</span></a>" name=""&gt;Письменная корреспонденция&lt;/a&gt;&lt;dl&gt;&lt;/dl&gt;&lt;/dd&gt;&lt;dd&gt;&lt;a href="<a href="http://www.russianpost.ru/rp/servise/ru/home/postuslug/1class"><span class="s1">/rp/servise/ru/home/postuslug/1class</span></a>" name=""&gt;Отправления 1 класса&lt;/a&gt;&lt;dl&gt;&lt;/dl&gt;&lt;/dd&gt;&lt;dd&gt;&lt;a href="<a href="http://www.russianpost.ru/rp/servise/ru/home/postuslug/bookpostandparcel"><span class="s1">/rp/servise/ru/home/postuslug/bookpostandparcel</span></a>" name=""&gt;Бандероли и посылки&lt;/a&gt;&lt;dl&gt;&lt;/dl&gt;&lt;/dd&gt;&lt;dd&gt;&lt;a href="<a href="http://www.russianpost.ru/rp/servise/ru/home/postuslug/searchops"><span class="s1">/rp/servise/ru/home/postuslug/searchops</span></a>" name=""&gt;Поиск отделений почтовой связи&lt;/a&gt;&lt;dl&gt;&lt;/dl&gt;&lt;/dd&gt;&lt;dd&gt;&lt;a class="active" href="<a href="http://www.russianpost.ru/rp/servise/ru/home/postuslug/trackingpo"><span class="s1">/rp/servise/ru/home/postuslug/trackingpo</span></a>" name="m1"&gt;Отслеживание почтовых отправлений&lt;/a&gt;&lt;dl&gt;&lt;/dl&gt;&lt;/dd&gt;&lt;dd&gt;&lt;a href="<a href="http://www.russianpost.ru/rp/servise/ru/home/postuslug/ems"><span class="s1">/rp/servise/ru/home/postuslug/ems</span></a>" name=""&gt;Экспресс-почта EMS Почта России&lt;/a&gt;&lt;dl&gt;&lt;/dl&gt;&lt;/dd&gt;&lt;dd&gt;&lt;a href="<a href="http://www.russianpost.ru/rp/servise/ru/home/postuslug/termsdelivery"><span class="s1">/rp/servise/ru/home/postuslug/termsdelivery</span></a>" name=""&gt;Сроки доставки&lt;/a&gt;&lt;dl&gt;&lt;/dl&gt;&lt;/dd&gt;&lt;dd&gt;&lt;a href="<a href="http://www.russianpost.ru/rp/servise/ru/home/postuslug/autotarif"><span class="s1">/rp/servise/ru/home/postuslug/autotarif</span></a>" name=""&gt;Рассчитать стоимость почтового отправления&lt;/a&gt;&lt;dl&gt;&lt;/dl&gt;&lt;/dd&gt;&lt;dd&gt;&lt;a href="<a href="http://www.russianpost.ru/rp/servise/ru/home/postuslug/controlquality"><span class="s1">/rp/servise/ru/home/postuslug/controlquality</span></a>" name=""&gt;Контроль качества и розыск почтовых отправлений&lt;/a&gt;&lt;dl&gt;&lt;/dl&gt;&lt;/dd&gt;&lt;dd&gt;&lt;a href="<a href="http://www.russianpost.ru/rp/servise/ru/home/postuslug/pochtomats"><span class="s1">/rp/servise/ru/home/postuslug/pochtomats</span></a>" name=""&gt;Почтоматы&lt;/a&gt;&lt;dl&gt;&lt;/dl&gt;&lt;/dd&gt;&lt;dd&gt;&lt;a href="<a href="http://www.russianpost.ru/rp/servise/ru/home/postuslug/sms_notif"><span class="s1">/rp/servise/ru/home/postuslug/sms_notif</span></a>" name=""&gt;SMS-уведомление&lt;/a&gt;&lt;dl&gt;&lt;/dl&gt;&lt;/dd&gt;&lt;dd&gt;&lt;a href="<a href="http://www.russianpost.ru/rp/servise/ru/home/postuslug/rule_adress"><span class="s1">/rp/servise/ru/home/postuslug/rule_adress</span></a>" name=""&gt;Правила оформления почтовых отправлений&lt;/a&gt;&lt;dl&gt;&lt;/dl&gt;&lt;/dd&gt;&lt;dd&gt;&lt;a href="<a href="http://www.russianpost.ru/rp/servise/ru/home/postuslug/goodslist"><span class="s1">/rp/servise/ru/home/postuslug/goodslist</span></a>" name=""&gt;Список предметов, запрещенных к пересылке&lt;/a&gt;&lt;dl&gt;&lt;/dl&gt;&lt;/dd&gt;&lt;dd&gt;&lt;a href="<a href="http://www.russianpost.ru/rp/servise/ru/home/postuslug/samplesaccompandocum"><span class="s1">/rp/servise/ru/home/postuslug/samplesaccompandocum</span></a>" name=""&gt;Образцы сопроводительных документов&lt;/a&gt;&lt;dl&gt;&lt;/dl&gt;&lt;/dd&gt;&lt;dd&gt;&lt;a href="<a href="http://www.russianpost.ru/rp/servise/ru/home/postuslug/ipo"><span class="s1">/rp/servise/ru/home/postuslug/ipo</span></a>" name=""&gt;Мультиконверт&lt;/a&gt;&lt;dl&gt;&lt;/dl&gt;&lt;/dd&gt;&lt;dd&gt;&lt;a href="<a href="http://www.russianpost.ru/rp/servise/ru/home/postuslug/remove_clients"><span class="s1">/rp/servise/ru/home/postuslug/remove_clients</span></a>" name=""&gt;Обращения пользователей услугами ФГУП «Почта России»&lt;/a&gt;&lt;dl&gt;&lt;/dl&gt;&lt;/dd&gt;&lt;dd&gt;&lt;a href="<a href="http://www.russianpost.ru/rp/servise/ru/home/postuslug/customs"><span class="s1">/rp/servise/ru/home/postuslug/customs</span></a>" name=""&gt;Таможенное оформление почтовых отправлений&lt;/a&gt;&lt;dl&gt;&lt;/dl&gt;&lt;/dd&gt;&lt;dd&gt;&lt;a href="<a href="http://www.russianpost.ru/rp/servise/ru/home/postuslug/philately"><span class="s1">/rp/servise/ru/home/postuslug/philately</span></a>" name=""&gt;Филателия&lt;/a&gt;&lt;dl&gt;&lt;/dl&gt;&lt;/dd&gt;&lt;/dl&gt;&lt;/div&gt;&lt;p&gt;Современная технология пересылки подразумевает присвоение регистрируемым почтовым отправлениям (заказным или с объявленной ценностью) уникального почтового идентификатора. На каждом этапе пересылки информация почтового идентификатора заносится в единую систему учёта и контроля, благодаря чему возможно отследить прохождение Вашего почтового отправления через Интернет.&lt;/p&gt;&lt;h5&gt;Поиск по почтовому идентификатору&lt;/h5&gt;&lt;p&gt;Отслеживание операций обработки РПО (в том числе международных) по почтовому идентификатору (либо внутрироссийскому 14-символьному, либо международному).&lt;/p&gt;&lt;p&gt;Почтовый идентификатор находится в чеке, выдаваемом при приеме почтового отправления. Вид номера: 115127(80)15138 4. Следует вводить: &lt;br /&gt;&lt;em&gt;Почтовый идентификатор: 11512780151384 (весь номер без скобок и пробелов)&lt;/em&gt;.&lt;/p&gt;&lt;p&gt;В случае отслеживания международного почтового отправления и EMS-отправления необходимо вводить 4 буквы и 9 цифр. Буквы вводятся обязательно ЗАГЛАВНЫЕ и в латинском алфавите.&lt;br /&gt;&lt;em&gt;Пример: YF123456789RU (весь номер без пробелов).&lt;/em&gt;&lt;/p&gt;&lt;table&gt;&lt;tr&gt;&lt;td&gt;</p>
+      </td>
+    </tr>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p1"><br></p>
+      </td>
+      <td valign="middle" class="td2">
+        <p class="p2">Почтовый идентификатор:</p>
+      </td>
+    </tr>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p1"><br></p>
+      </td>
+      <td valign="middle" class="td2">
+        <p class="p2">&lt;/td&gt;&lt;td&gt;&lt;input type="text" id="BarCode" name="BarCode" onchange="this.value = $.trim(this.value)" value="RA536339911CN"&gt;&lt;/input&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td /&gt;&lt;td&gt;&lt;DIV id="lblBrcdErrMsg" style="COLOR: red; DISPLAY: inline; WIDTH: 50%; HEIGHT: 15px" ms_positioning="FlowLayout" /&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td colspan="2"&gt;&lt;table&gt;&lt;tr&gt;&lt;td&gt;Введите код:&lt;/td&gt;&lt;td&gt;&lt;input type='text' name='InputedCaptchaCode' id='InputedCaptchaCode' /&gt;&lt;/td&gt;&lt;td&gt;&lt;img id='captchaImage' src='<a href="http://www.russianpost.ru/CaptchaService/CaptchaImage.ashx?Id=141858"><span class="s1">http://www.russianpost.ru/CaptchaService/CaptchaImage.ashx?Id=141858</span></a>' width='70px' height='23px' alt=''/&gt;&lt;/td&gt;&lt;td&gt;&lt;input type='hidden' name='CaptchaId' id='CaptchaId' value='141858'&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td colspan="4"&gt;&lt;div ms_positioning="FlowLayout" style="COLOR: red; DISPLAY: inline; WIDTH: 50%; HEIGHT: 15px" id="CaptchaErrorCodeContainer"&gt;&lt;/div&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;p&gt;&lt;input type="hidden" id="searchsign" name="searchsign" /&gt;&lt;/p&gt;&lt;input type="hidden" id="entryBarCode" name="entryBarCode" size="14" maxlength="14" value=""&gt;&lt;/input&gt;&lt;p&gt;&lt;input type="button" name="searchbarcode" onclick="CheckInputCode();" value="Найти"&gt;&lt;/input&gt;&lt;/p&gt;&lt;h2&gt;Результат поиска:&lt;/h2&gt;&lt;p class="red"&gt;К сожалению, информация о почтовом отправлении с номером RA536339911CN не найдена.&lt;/p&gt;&lt;/div&gt;&lt;br clear="all" /&gt;&lt;div align="right"&gt;&lt;a href="<a href="http://www.russianpost.ru/resp_engine.aspx?Path=rp/servise/ru/home/postuslug/trackingpo#top"><span class="s1">#top</span></a>" class="lnk_ontop"&gt;наверх&lt;/a&gt;&lt;/div&gt;&lt;div align="left"&gt;&lt;a href="<a href="javascript:SetPrintable()"><span class="s1">javascript:SetPrintable()</span></a>" class="lnk_print"&gt;Версия для печати&lt;/a&gt;&lt;/div&gt;&lt;/div&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/form&gt;&lt;/body&gt;&lt;/html&gt;</p>
+      </td>
+    </tr>
+  </tbody>
+</table>
+</body>
+</html>

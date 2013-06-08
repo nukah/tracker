@@ -15,7 +15,6 @@ class App < Sinatra::Base
   set :environments, %w{development staging production}
 
   configure do
-    register Sinatra::Synchrony
     sprockets.append_path File.join(root, 'assets', 'stylesheets')
     sprockets.append_path File.join(root, 'assets', 'javascripts')
     register Sinatra::ConfigFile
@@ -26,6 +25,7 @@ class App < Sinatra::Base
     register Sinatra::Reloader
   end
 
+  use BetterErrors::Middleware
   helpers Sinatra::AssetHelpers
 
   get "/" do
@@ -37,13 +37,11 @@ class App < Sinatra::Base
     content_type :json
     tid = params[:tid]
     new_tracking = Tracking.new(tid: tid)
-    if new_tracking.save()
-      EM.synchrony do
-        response = EM::Synchrony.sync DataRetriever.new(tid)
-        response.to_json
-      end
-    else
-      {errors: new_tracking.errors.full_messages}.to_json
+    new_tracking.save()
+    {errors: new_tracking.errors.full_messages}.to_json if new_tracking.errors.any?
+    EM.synchrony do
+      response = EM::Synchrony.sync DataRetriever.new(tid)
+      puts response
     end
   end
 end

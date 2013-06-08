@@ -1,26 +1,30 @@
+#!/usr/bin/env ruby
 require 'nokogiri'
 require 'em-http-request'
 require 'em-synchrony'
+require "em-synchrony/fiber_iterator"
 require 'base64'
 
 class DataRetriever
   include EM::Deferrable
+  MAX_ATTEMPTS = 5
   def initialize tid
     url = "http://www.russianpost.ru/resp_engine.aspx?Path=rp/servise/ru/home/postuslug/trackingpo"
     body = EM::Synchrony.sync ClearRequest.new(url)
+    puts body
+    history = {}
     image_id, image_url = body.css("#CaptchaId").attr("value").value, body.css("#captchaImage").attr("src").value
     image_request = EM::Synchrony.sync EM::HttpRequest.new(image_url).get
     image = Base64.strict_encode64(image_request.response)
     resolver = EM::Synchrony.sync CaptchaResolver.new(image_id, image)
     tracking_request = EM::Synchrony.sync EM::HttpRequest.new(url).post :body => {'BarCode' => tid, 'searchsign' => 1, 'CaptchaId' => image_id, 'InputedCaptchaCode' => resolver }
     tracking_history = Nokogiri::HTML(tracking_request.response)
-    history = {}
     tracking_history.css(".pagetext tbody > tr").collect { |list| list.css('td').collect { |row| row.inner_text }}.each do |element|
       status, date = element[0].to_s, element[1].to_s
       history.store(status,date)
     end
+    puts "Processing #{tid} -> #{history}"
     self.succeed(history)
-    EM.stop
   end
 end
 
@@ -41,7 +45,7 @@ class CaptchaResolver
           self.succeed(result)
         end  
       }
-    else 
+    else
       self.fail(send_captcha.response)
     end                                                           
   end
@@ -54,15 +58,31 @@ class ClearRequest
       request = EM::Synchrony.sync EM::HttpRequest.new(url).get
       body = Nokogiri::HTML(request.response)
       if body.search("form[name=myform]").any?
-        puts "Failed"
         key = body.search("input[name=key]").attr("value").value
-        post_request = EM::Synchrony.sync EM::HttpRequest.new(url).post :body => {'key' => key}
-        post_request_body = Nokogiri::HTML(post_request.response)
+        post_request = EM::Synchrony.sync EM::HttpRequest.new(url).post :body => {'key' => key }
       else
-        puts "Succeed"
         passing_timer.cancel
         self.succeed(body)
       end
+      false
     }
   end
+end
+
+file_name = ARGV[0]
+pattern = /([a-zA-Z]{2}\d{9}[a-zA-Z]{2})/
+begin
+  list = File.open(file_name) if File.file?(file_name) or raise Exception, "Wrong filename."
+rescue Exception => e
+  puts e.message
+  exit
+end
+found_ids = []
+list.each_line { |l| if l.match(pattern) then found_ids << l.match(pattern)[0] end }
+EM.synchrony do
+  r = EM::Synchrony::FiberIterator.new(found_ids, 3).map do |id|
+    DataRetriever.new(id)
+  end
+  puts r
+  EM.stop
 end
